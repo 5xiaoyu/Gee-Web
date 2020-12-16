@@ -1,4 +1,4 @@
-//module test/geeHttp/one
+//module test/geeHttp/day1-web
 module one
 go 1.15
 
