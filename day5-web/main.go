@@ -1,64 +1,41 @@
 package main
 
 import (
-	"fmt"
-	"time"
+	"gee"
+	//"fmt"
+	"net/http"
 )
 
-//var numCores = flag.Int("n", 2, "number of CPU cores to use")
+func main () {
+	r := gee.New()
+	r.GET("/index", func(c *gee.Context) {
+		c.HTML(http.StatusOK, "<h1>Index Page</h1>")
+	})
+	v1 := r.Group("/v1")
+	{
+		v1.GET("/", func(c *gee.Context) {
+			c.HTML(http.StatusOK, "<h1>Hello Gee</h1>")
+		})
 
-//func main() {
-//
-//	//flag.Parse()
-//	//runtime.GOMAXPROCS(*numCores)
-//	fmt.Println(*numCores)
-//
-//	fmt.Println("In main()")
-//	go longWait()
-//	go shortWait()
-//	fmt.Println("About to sleep in main()")
-//	// sleep works with a Duration in nanoseconds (ns) !
-//	time.Sleep(10 * 1e9)
-//	fmt.Println("At the end of main()")
-//}
-//
-//func longWait() {
-//	fmt.Println("Beginning longWait()")
-//	time.Sleep(5 * 1e9) // sleep for 5 seconds
-//	fmt.Println("End of longWait()")
-//}
-//
-//func shortWait() {
-//	fmt.Println("Beginning shortWait()")
-//	time.Sleep(2 * 1e9) // sleep for 2 seconds
-//	fmt.Println("End of shortWait()")
-//}
-
-func main() {
-
-	ch := make(chan string)
-
-	sendData(ch)
-	//go sendData(ch)
-	go getData(ch)
-	//go getData(ch)
-
-	time.Sleep(1e9)
-}
-
-func sendData(ch chan string) {
-	ch <- "Washington"
-	ch <- "Tripoli"
-	ch <- "London"
-	ch <- "Beijing"
-	ch <- "Tokio"
-}
-
-func getData(ch chan string) {
-	var input string
-	//time.Sleep(2e9)
-	for {
-		input = <-ch
-		fmt.Printf("%s ", input)
+		v1.GET("/hello", func(c *gee.Context) {
+			// expect /hello?name=geektutu
+			c.String(http.StatusOK, "hello %s, you're at %s\n", c.Query("name"), c.Path)
+		})
 	}
+	v2 := r.Group("/v2")
+	{
+		v2.GET("/hello/:name", func(c *gee.Context) {
+			// expect /hello/geektutu
+			c.String(http.StatusOK, "hello %s, you're at %s\n", c.Param("name"), c.Path)
+		})
+		v2.POST("/login", func(c *gee.Context) {
+			c.JSON(http.StatusOK, gee.H{
+				"username": c.PostForm("username"),
+				"password": c.PostForm("password"),
+			})
+		})
+
+	}
+
+	r.Run(":9999")
 }
