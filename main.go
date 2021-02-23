@@ -2,14 +2,22 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 )
 
 func main() {
-	http.HandleFunc("/", indexHandler)
-	http.HandleFunc("/hello", helloHandler)
-	log.Fatal(http.ListenAndServe(":9999", nil))
+	//http.HandleFunc("/", indexHandler)
+	//http.HandleFunc("/hello", helloHandler)
+	//log.Fatal(http.ListenAndServe(":9999", nil))
+
+
+	// leecode maxSatisfied 测试
+	//cus := []int{1,0,1,2,1,1,7,5}
+	//gru := []int{0,1,0,1,0,1,0,1}
+	//x := 3
+	//var ret int
+	//ret = maxSatisfied(cus,gru,x)
+	//fmt.Println(ret)
 }
 
 // handler echoes r.URL.Path
@@ -23,3 +31,34 @@ func helloHandler(w http.ResponseWriter, req *http.Request) {
 		fmt.Fprintf(w, "Header[%q] = %q\n", k, v)
 	}
 }
+
+func maxSatisfied(customers []int, grumpy []int, X int) int {
+	length := len(customers)
+	satisfyNum := 0
+	for i, num:= range customers {
+		if grumpy[i] == 0 {
+			satisfyNum += num
+		}
+	}
+
+	maxUnSatisfyNum,unSatisfyNum := 0,0
+
+	for i:=0; i < length; i++{
+		unSatisfyNum = 0
+		for j,k:=i,X+i; j<k && j<length; j++ {
+			if grumpy[j] == 1 {
+				unSatisfyNum += customers[j]
+			}
+			fmt.Printf("i is %d, unSatisfyNum is %d\n",i, unSatisfyNum )
+		}
+
+		if maxUnSatisfyNum < unSatisfyNum {
+			maxUnSatisfyNum = unSatisfyNum
+		}
+	}
+	fmt.Printf("satisfy num is %d\n", satisfyNum )
+	fmt.Printf("maxUnSatisfyNum num is %d\n", maxUnSatisfyNum )
+	return maxUnSatisfyNum+satisfyNum
+}
+
+
