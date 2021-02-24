@@ -11,7 +11,7 @@ func main() {
 	//log.Fatal(http.ListenAndServe(":9999", nil))
 
 
-	// leecode maxSatisfied 测试
+	//2021-02-24:leecode  maxSatisfied
 	//cus := []int{1,0,1,2,1,1,7,5}
 	//gru := []int{0,1,0,1,0,1,0,1}
 	//x := 3
@@ -31,7 +31,7 @@ func helloHandler(w http.ResponseWriter, req *http.Request) {
 		fmt.Fprintf(w, "Header[%q] = %q\n", k, v)
 	}
 }
-
+//2021-02-23:leecode  maxSatisfied
 func maxSatisfied(customers []int, grumpy []int, X int) int {
 	length := len(customers)
 	satisfyNum := 0
@@ -49,16 +49,36 @@ func maxSatisfied(customers []int, grumpy []int, X int) int {
 			if grumpy[j] == 1 {
 				unSatisfyNum += customers[j]
 			}
-			fmt.Printf("i is %d, unSatisfyNum is %d\n",i, unSatisfyNum )
+			//fmt.Printf("i is %d, unSatisfyNum is %d\n",i, unSatisfyNum )
 		}
 
 		if maxUnSatisfyNum < unSatisfyNum {
 			maxUnSatisfyNum = unSatisfyNum
 		}
 	}
-	fmt.Printf("satisfy num is %d\n", satisfyNum )
-	fmt.Printf("maxUnSatisfyNum num is %d\n", maxUnSatisfyNum )
+	//fmt.Printf("satisfy num is %d\n", satisfyNum )
+	//fmt.Printf("maxUnSatisfyNum num is %d\n", maxUnSatisfyNum )
 	return maxUnSatisfyNum+satisfyNum
+}
+
+//2021-02-24:leecode  maxSatisfied
+func flipAndInvertImage(A [][]int ) [][]int {
+	for _, row :=range A  {
+		left, right := 0, len(row)-1
+		for left < right {
+			if row[left] == row[right] {
+				row[left] ^= 1
+				row[right] ^= 1
+			}
+			left++
+			right--
+		}
+		if left == right {
+			row[left] ^= 1
+		}
+	}
+
+	return A
 }
 
 
