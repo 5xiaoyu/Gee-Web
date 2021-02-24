@@ -1,4 +1,5 @@
-module day4
+module github.com/5xiaoyu/geeWeb/day4-web
+
 
 go 1.15
 

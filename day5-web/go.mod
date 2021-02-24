@@ -1,4 +1,5 @@
-module day5
+module github.com/5xiaoyu/geeWeb/day5-web
+
 
 go 1.15
 

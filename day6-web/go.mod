@@ -1,4 +1,5 @@
-module day6
+module github.com/5xiaoyu/geeWeb/day6-web
+
 
 go 1.15
 

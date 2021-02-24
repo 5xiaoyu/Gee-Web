@@ -61,7 +61,7 @@ func maxSatisfied(customers []int, grumpy []int, X int) int {
 	return maxUnSatisfyNum+satisfyNum
 }
 
-//2021-02-24:leecode  maxSatisfied
+//2021-02-24:leecode  flipAndInvertImage
 func flipAndInvertImage(A [][]int ) [][]int {
 	for _, row :=range A  {
 		left, right := 0, len(row)-1
